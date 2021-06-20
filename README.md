@@ -15,4 +15,3 @@
 #### [3D semi-supervised detection](3D-semi-supervised-detection.md)
 
 #### [knowledge distillation](knowledge-distillation.md)
-1977117Zhi.
