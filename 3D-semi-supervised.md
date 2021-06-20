@@ -53,7 +53,22 @@
   + 根据跟踪信息对动静进行判断
   + 迭代式地回归静态物体的BBoX
   + 动态物体则是结合点云的时序编码和跟踪的BBoX的时序编码回归中间序列的BBoX
-
-
+### ST3D (CVPR 2021)
+![](figure/st3d.png)
++ 提出的是个self-training框架
+1. ROS, random object scaling
+  + 在局部坐标系上进行scale random
+2. QTMB, pseudo label generation, we develop a quality-aware triplet memory bank
+  + 我们是第一个证明IoU可以作为一个很好的标准来评估伪标签的质量
+3. triplet box partition scheme
+  + 依照IoU进行State分类
+4. memory bank
+  + 根据置信度对memory里的标签进行更新
+5. CDA, curriculum data augmentation
+  + 逐渐得增大数据增强的强度
+### Weakly Supervised 3D Object Detection from Lidar Point Cloud
+![](figure/ws3det.png)
++ 用在BEV上点的中心点弱监督3d detection
 ### 思考
-+ 目前半监督的labeled sample包含了所有类，能不能包含unlabeled classes
++ 能不能用无监督方法的损失+pseudo-label的损失
++ 能不能解决长尾效应
