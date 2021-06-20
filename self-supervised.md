@@ -1,4 +1,4 @@
-##self-supervised
+## self-supervised
 + 核心思想：先无监督训练，然后再有监督微调
   1. Unsupervised Pre-train in a task-agnostic way.
   2. Supervised Fine-tune in a task-specific way.

@@ -1,4 +1,4 @@
-###目标检测学习笔记
+### 目标检测学习笔记
 
 #### [2D supervised detection](2D-supervised-detection.md)
 
@@ -15,3 +15,4 @@
 #### [3D semi-supervised detection](3D-semi-supervised-detection.md)
 
 #### [knowledge distillation](knowledge-distillation.md)
+1977117Zhi.
