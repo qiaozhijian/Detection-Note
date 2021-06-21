@@ -3,7 +3,7 @@
 + common issues:OScalecclusion,Class imbalance,Rotation,Generalization
 + 2D issues: Scale,Illumination
 + 3D issues: Lack of texture,Sparsity
-###Pointnet,2017
+### Pointnet,2017
 + 解决无序性，f(P)=g(h(x1);... ;h(xn))，g是一个对称函数，比如maxpool
 + 解决旋转问题，引入T-net(Spatial transformer networks)\
 + 两个数学证明

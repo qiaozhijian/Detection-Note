@@ -1,5 +1,5 @@
-#2D object detection
-##Two stage
+# 2D object detection
+## Two stage
 ### R-CNN（Regions with CNN features）CVPR, 2014
 + 前人方案比较
   + SIFT和HOG特征相当于生物的皮质层，不够hierarchical和multi-stage，不够informative

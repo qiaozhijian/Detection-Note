@@ -1,9 +1,9 @@
-+ CompRess: Self-Supervised Learning by Compressing Representations
-  + 我们需要通过计算输入图像（query）和所有已知数据点（anchor）之间的距离得到一个教师网络空间中的最近邻分类器，然后将这些距离转化为概率分布
-  + 将这种教师空间中的概率分布迁移到学生网络中，从而使学生网络与教师网络中 anchor 的排序相匹配
-  + ![](figure/compress.jpg)
+### CompRess: Self-Supervised Learning by Compressing Representations
++ 我们需要通过计算输入图像（query）和所有已知数据点（anchor）之间的距离得到一个教师网络空间中的最近邻分类器，然后将这些距离转化为概率分布
++ 将这种教师空间中的概率分布迁移到学生网络中，从而使学生网络与教师网络中 anchor 的排序相匹配
++ ![](figure/compress.jpg)
 
-###SE-SSD（Self-Ensembling），cvpr 2021
+### SE-SSD（Self-Ensembling），cvpr 2021
 + motivation
 + hard 目标的样本点云和特征可能差异很大（即尽管是标注的样本，由于距离和遮挡等因素，同一目标的差异可能很大，因此需要 soft 样本）。相比之下，每个训练样本的soft 目标信息更丰富，有助于揭示同类的数据样本之间的差异。这促使我们将相对精确的teacher predication视为soft 目标，并利用它们来共同优化具有 hard 目标的student
 + hard 目标：即标注信息
