@@ -12,7 +12,8 @@
   + 无标签数据与有标签的数据类别分布不一致
   + 如果用Proxy(Pseudo)-label，有一定几率会出现错误
 + 主要分为Consistency Regularization，Proxy(Pseudo)-label Methods，Holistic Methods三类
-##基础框架介绍
+
+## 基础框架介绍
 ### Consistency Regularization
 + Consistency Regularization
   + 利用未标记的数据来强化训练模型，使其符合聚类假设，即学习的决策边界必须位于低密度区域
@@ -27,6 +28,7 @@
 + 而有监督学习是用于分类，希望只保留与任务相关的、具有内在不变性的特征，去除不必要的特征
 + 无监督学习和有监督学习的目的不一致, 通过 skip connection 解决这个问题
 + ![](figure/ladder.jpg)
+
 #### Pi-Model
 + motivation
   + 由于正则化技术（例如 data augment 和 dropout）通常不会改变模型输出的概率分布
@@ -36,21 +38,25 @@
   + 第一项含有一个时变系数 w。x 是未标记数据，由两次前向运算结果的均方误差（MSE）构成
   + 第二项由交叉熵构成，x 是标记数据，y 是对应标签
   + ![](figure/piloss.png)
-####Temporal Ensembling
+
+#### Temporal Ensembling
   + 在目标函数的无监督一项中， Pi-Model 是两次前向计算结果的均方差，而在temporal ensembling 模型中，使用时序组合模型，采用的是当前模型预测结果与历史预测结果的平均值做均方差计算
     + 有效地保留历史了信息，消除了扰动并稳定了当前值
     + 不用每次都两次前向传播了
   + ![](figure/Temporal_Ensembling.jpg)
-####Mean teachers
+
+#### Mean teachers
 + ![](figure/Mean_teachers.jpg)
 + Temporal Ensembling 对模型的预测值进行 EMA（exponential moving averag），而Mean Teachers 采用了对 studenet 模型权重进行 EMA
-####Unsupervised Data Augmentation（UDA）
+
+#### Unsupervised Data Augmentation（UDA）
 + motivation
   + 发现输入 x 增加的噪声 α 对模型的性能提升有着重要的影响，相比于之前的简单随机噪声，改进了增强方式
 + ![](figure/UDA.jpg)
 + 不同的任务其数据扩增应该要不一样
+
 ### Proxy(Pseudo)-label Methods
-####self-training
+#### self-training
 + 大概流程
   + ![](figure/self-train.jpg)
 + 生成伪标签的两种方式，锐化方法和 Argmax 方法
@@ -59,6 +65,7 @@
 + 存在问题
   + 过拟合，可能一直在强化标签数据
   + 可能生成错误的pseudo label,从而放大偏差
+
 #### Pseudo-Label, ICML 2013
 + 两个原理
   + Low-Density Separation between Classes
@@ -76,18 +83,21 @@
   + 无标签数据和有标签数据用同样的损失，并设定一个用模拟退火算法确定的平衡系数
     + $L=\frac{1}{n} \sum_{m=1}^{n} \sum_{i=1}^{C} L\left(y_{i}^{m}, f_{i}^{m}\right)+\alpha(t) \frac{1}{n^{\prime}} \sum_{m=1}^{n^{\prime}} \sum_{i=1}^{C} L\left(y_{i}^{\prime m}, f_{i}^{\prime m}\right)$
     + $\alpha(t)=\left\{\begin{array}{ll}0 & t<T_{1} \\ \frac{t-T_{1}}{T_{2}-T_{1}} \alpha_{f} & T_{1} \leq t<T_{2} \\ \alpha_{f} & T_{2} \leq t\end{array}\right.$
-####co-training
+
+#### co-training
 + 大概流程
   + 有 m1 和 m2 两个模型，它们分别在不同的数据集上训练
   + 每轮迭代中,会相互生成标签
   + ![](figure/co-train.jpg)
-####Tri-Training
+
+#### Tri-Training
 + 首先对有标记示例集进行可重复取样（bootstrap sampling）以获得三个有标记训练集
 + 从每个训练集产生一个分类器
 + 其余两个对一个unlabel预测相同，则把它加入到第三个的训练集
 + ![](figure/Tri-Training.jpg)
+
 ### Holistic Methods
-####MixMatch[NeurIPS 2019][超强半监督学习 MixMatch](https://zhuanlan.zhihu.com/p/66281890)
+#### MixMatch[NeurIPS 2019][超强半监督学习 MixMatch](https://zhuanlan.zhihu.com/p/66281890)
 + ![](figure/MixMatch.jpg)
 + 自洽正则化（Consistency Regularization）,数据增广
 + 最小化熵（Entropy Minimization），sharpen
@@ -96,7 +106,8 @@
 + ![](figure/xuloss.svg)
   + L2 Loss 比 Cross Entropy Loss 更加严格。原因是 Cross Entropy 计算是需要先使用 Softmax 函数，而 softmax 函数对于常数叠加不敏感
 + 优于GAN做半监督学习，差于Unsupervised Data Augmentation
-####FixMatch（NIPS 2020）
+
+#### FixMatch（NIPS 2020）
 + motivation
   + 演示了两种常见SSL方法的简单组合的力量：一致性正则化和伪标记
 + FixMatch 是对弱增强图像与强增强图像之间的进行一致性正则化，但是其没有使用两种图像的概率分布一致，而是使用弱增强的数据制作了伪标签，
@@ -104,9 +115,12 @@
   + 强增强：输出严重失真的输入图像，先使用 RandAugment 或 CTAugment，再使用 CutOut 增强
 + ![](figure/fixmatch.jpg)
 + ![](figure/FixMatchtrain.jpg)
-####ReMixMatch（ICLR 2020）
-####FeatMatch（ECCV 2020）
-####UPS(Uncertainty-Aware Pseudo-Label Selection)(ICLR 2021)
+
+#### ReMixMatch（ICLR 2020）
+
+#### FeatMatch（ECCV 2020）
+
+#### UPS(Uncertainty-Aware Pseudo-Label Selection)(ICLR 2021)
 + motivation
   + 一致性正则法占据主导，最常用的是基于数据增强，但需要搜索最合适的（domain-specific）增强方法。但像视频分类就没有有效的增强策略，半监督泛化性就不好了。
     + ![](figure/ups1.jpg)
@@ -119,7 +133,8 @@
   + ![](figure/ups1.png)
   + ![](figure/ups3.jpg)
   + 重新随机初始化，是为了避免打上错误伪标签的样本带来的误差在迭代训练中不断传播
-#### CReST(CVPR, 2021)
+
+####  CReST(CVPR, 2021)
 + motivation,半监督场景下的长尾分布问题
   + 长尾分布常用策略，重采样 (Re-Sampling) 以及重加权 (Re-Weighting)
     + ![](figure/crest1.jpg)

@@ -1,5 +1,5 @@
-#3D object detection
-###3D vs 2D
+# 3D object detection
+### 3D vs 2D
 + common issues:OScalecclusion,Class imbalance,Rotation,Generalization
 + 2D issues: Scale,Illumination
 + 3D issues: Lack of texture,Sparsity
@@ -35,8 +35,8 @@
   + t-SNE将来自我们分类PointNet的点云全局签名（1024维）嵌入到2D空间中，发现相似的形状聚集在一起
   + 分析了一些语义分割的错误情况
   + 探究h函数的意义，h函数生成1024向量，对于每一维，有固定的一个范围内的点，经过h函数后使该维大于0.5。
-    + 这一点说明h函数对###Pointnet++点云空间结构有感知
-###Pointnet++,2017
+    + 这一点说明h函数对### Pointnet++点云空间结构有感知
+### Pointnet++,2017
 + group策略
   + simple:FPS->KNN->pointnet
   + MSG(Multi-scale grouping):多尺度，对于同一层不同范围的点进行pointnet，生成的多个特征concat
@@ -56,7 +56,7 @@
   + 对FPS的随机初始化不是很敏感
   + 时间对比(如下粗略结果)
     + PointNet (vanilla)（1）<PointNet(2) < Ours (SSG)(8) <  Ours (MRG)(8) < Ours (MSG)(16)
-###VoxelNet,2017
+### VoxelNet,2017
 + 前人工作不足
   + 用鸟瞰图进行提取proposal，忽略3D结构
   + 体素内进行人工特征设计，不能提取足够复杂的特征
@@ -76,7 +76,7 @@
   + 对每个检测框加旋转平移扰动（不能太大，不然有遮挡，且不满足实际情况）
   + 对尺度进行放缩
   + 对所有的检测框进行旋转（Z轴）
-###SECOND(Sparsely Embedded Convolutional Detection), sensor, 2018
+### SECOND(Sparsely Embedded Convolutional Detection), sensor, 2018
 + 前人工作不足
   + 基于体素的方法运行较慢且内存占用大，主要由于大部分体素都是空的
   + 真实的3D检测框相反方向的预测检测框会有较大的损失函数，从而造成训练过程不好收敛
@@ -135,7 +135,7 @@
     + 标准化丧失距离信息，因此再加上距离分量
   + 将获得的全局的语义特征与局部特征（已经通过Canonical变换和MLP）进行堆叠融合
   + 重新调节bin大小，进行回归
-###SA-SSD（structure-aware），cvpr 2020
+### SA-SSD（structure-aware），cvpr 2020
 + 前人不足
   + 多次卷积丧失点云结构信息
   + confidence和BBoX不一致，造成NMS时，高置信度但低定位质量的框被保留，而定位质量高却置信度低的框被丢弃
@@ -148,7 +148,7 @@
   + 因为confidence是和特征图上的位置有关的，但BBoX又不能正好投影到所对应的位置上（总有误差）
   + part-sensitive，假设生成K个分类特征图，对应object的K个部分，比如（左上，右上，左下，右下）
   + 对应回归网络也生成K个grid，最后的confidence结果取加权平均（需要看code进行理解）
-###PV-RCNN（point-based and voxel-based），CVPR 2020
+### PV-RCNN（point-based and voxel-based），CVPR 2020
 + motivation
   + pointnet++里提到的set abstraction，保留原始点云信息，定位信息更准，并且自定义球半径可以让感受野变换更灵活
   + 基于体素的方法因为用到了sparse conv速度更快，并且可以方便地提取多尺度信息
@@ -166,7 +166,7 @@
 + 贡献点三，RoI-grid（keypoint-to-grid RoI） Pooling
   + 这次我们在每个RoI里面均匀的sample一些grid point（比如6x6x6个）
   + 然后将grid point当做球中心，去聚合周围的keypoint的特征，方法与贡献点一类似
-###3DSSD，CVPR 2020
+### 3DSSD，CVPR 2020
 + motivation
   + 第一个基于点的单阶段目标检测
   + SA，FP,refinement步骤耗时太长
@@ -183,7 +183,7 @@
   + 物体中心越近的点权重越大，因此设计准则
     + 确定这个点是否在物体里面 (binary-value)
     + 通过画出object的六面体，然后计算该点到其前后左右上下表面的距离，借鉴FCOS，得到其对应的center-ness值
-###CIA-SSD（Confident IoU-Aware），AAAI 2021
+### CIA-SSD（Confident IoU-Aware），AAAI 2021
 + motivation
   + 预测的分类置信度和定位精度不对齐
 + 解决方案
@@ -191,7 +191,7 @@
   + 训练阶段预测的IoU的损失不更新框回归的网络
   + 测试时，用IoU对confidence进行修正
   + 基于IoU和距离的NMS，也是各种用IoU进行加权
-###SE-SSD（Self-Ensembling），cvpr 2021
+### SE-SSD（Self-Ensembling），cvpr 2021
 + motivation
   + hard 目标的样本点云和特征可能差异很大（即尽管是标注的样本，由于距离和遮挡等因素，同一目标的差异可能很大，因此需要 soft 样本）。相比之下，每个训练样本的soft 目标信息更丰富，有助于揭示同类的数据样本之间的差异。这促使我们将相对精确的teacher predication视为soft 目标，并利用它们来共同优化具有 hard 目标的student
   + hard 目标：即标注信息
@@ -205,7 +205,7 @@
     + 数据增强是把物体分为6个面，随机删除，随机交换一个面，最后稀疏化
     + 中心点损失用(中心点差/最小框对角线)^2
     + 角度：(1-cos(delta r)) + 正反分类
-###PV-RCNN++，arxiv 2021
+### PV-RCNN++，arxiv 2021
 + motivation
   + PV-RCNN在速度上还有需要改进的地方
 + 贡献点一，Sectorized Proposal-Centric (SPC)
