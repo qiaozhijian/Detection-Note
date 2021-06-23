@@ -1,4 +1,4 @@
-### 目标检测学习笔记
+### Detection Notes
 
 #### [2D supervised detection](2D-supervised-detection.md)
 
