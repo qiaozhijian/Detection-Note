@@ -1,0 +1,9 @@
+### RandAugment
++ 随机选数据增强方式和幅度
++ ![](figure/ra.jpg)
++ ![](figure/allaug.jpg)
+### CTAugment（ReMixMatch）
++ 和RandAgment一样随机选增强方法，但是magnitude是动态调整的
++ 只选取哪些能让网络输出正确标签的增强方法（网络容忍度之内）
+  + 根据有标签数据的预测损失对magnitude进行调节
++ ![](figure/ctaug.png)

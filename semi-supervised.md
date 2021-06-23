@@ -96,7 +96,7 @@
 + 其余两个对一个unlabel预测相同，则把它加入到第三个的训练集
 + ![](figure/Tri-Training.jpg)
 
-### Holistic Methods
+### Holistic Methods（Consistency-based SelfTraining）
 #### MixMatch[NeurIPS 2019][超强半监督学习 MixMatch](https://zhuanlan.zhihu.com/p/66281890)
 + ![](figure/MixMatch.jpg)
 + 自洽正则化（Consistency Regularization）,数据增广
@@ -106,7 +106,6 @@
 + ![](figure/xuloss.svg)
   + L2 Loss 比 Cross Entropy Loss 更加严格。原因是 Cross Entropy 计算是需要先使用 Softmax 函数，而 softmax 函数对于常数叠加不敏感
 + 优于GAN做半监督学习，差于Unsupervised Data Augmentation
-
 #### FixMatch（NIPS 2020）
 + motivation
   + 演示了两种常见SSL方法的简单组合的力量：一致性正则化和伪标记
@@ -115,11 +114,15 @@
   + 强增强：输出严重失真的输入图像，先使用 RandAugment 或 CTAugment，再使用 CutOut 增强
 + ![](figure/fixmatch.jpg)
 + ![](figure/FixMatchtrain.jpg)
-
 #### ReMixMatch（ICLR 2020）
 
 #### FeatMatch（ECCV 2020）
 
+#### Noisy student（CVPR 2020）
++ 使用不同的方法给学生增加噪音。但当生成伪标签时，教师并没有被噪声干扰
++ 尽管教师和学生的结构可以相同，但学生模型的容量应该更高，因为同时拟合label和unlabel
++ 平衡数据：作者发现，当每个类的未标记图像数量相同时，学生模型效果良好
+![](figure/noisystudent.png)
 #### UPS(Uncertainty-Aware Pseudo-Label Selection)(ICLR 2021)
 + motivation
   + 一致性正则法占据主导，最常用的是基于数据增强，但需要搜索最合适的（domain-specific）增强方法。但像视频分类就没有有效的增强策略，半监督泛化性就不好了。
