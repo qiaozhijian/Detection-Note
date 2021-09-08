@@ -106,6 +106,11 @@
 + ![](figure/xuloss.svg)
   + L2 Loss 比 Cross Entropy Loss 更加严格。原因是 Cross Entropy 计算是需要先使用 Softmax 函数，而 softmax 函数对于常数叠加不敏感
 + 优于GAN做半监督学习，差于Unsupervised Data Augmentation
+#### ReMixMatch（ICLR 2020）
++ ![](figure/remixmatch1.png)
++ Distribution Alignment。由于MixMatch的标签猜测可能存在噪声和不一致的情况，作者提出利用有标签数据的标签分布，对无标签猜测进行对齐。$q=p_{\text {model }}(y \mid u ; \theta)$ 是对当前无标签数据的标签猜测，$\tilde{p}(y)$ 是一个运行平均版本（running average）的无标签猜测，$p(y)$ 是有标签数据的标签分布。对齐之后的标签猜测如下：
+  + $\tilde{q}=$ Normalize $\left(q \times \frac{p(y)}{\tilde{p}(y)}\right)$
++ Augmentation Anchor。作者的假设是对样本进行简单增强（比如翻转和裁切）之后的预测结果，要比多次复杂变换更加可靠和稳定。因此，对于同一张图片，首先进行弱增强，得到预测结果 $\tilde{q}$，然后对同一张图片进行复杂的强增强。弱增强和强增强共同使用一个标签猜测 $\tilde{q}$, 进行Mixup和模型训练。
 #### FixMatch（NIPS 2020）
 + motivation
   + 演示了两种常见SSL方法的简单组合的力量：一致性正则化和伪标记
@@ -114,7 +119,6 @@
   + 强增强：输出严重失真的输入图像，先使用 RandAugment 或 CTAugment，再使用 CutOut 增强
 + ![](figure/fixmatch.jpg)
 + ![](figure/FixMatchtrain.jpg)
-#### ReMixMatch（ICLR 2020）
 
 #### FeatMatch（ECCV 2020）
 
